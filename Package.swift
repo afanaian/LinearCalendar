@@ -5,11 +5,16 @@ import PackageDescription
 
 let package = Package(
     name: "LinearCalendar",
+    defaultLocalization: "en",
+    platforms: [
+        .iOS(.v13)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "LinearCalendar",
-            targets: ["LinearCalendar"]),
+            targets: ["LinearCalendar"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -20,9 +25,12 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "LinearCalendar",
-            dependencies: []),
+            dependencies: [],
+            resources: [.process("Resources")]
+        ),
         .testTarget(
             name: "LinearCalendarTests",
-            dependencies: ["LinearCalendar"]),
+            dependencies: ["LinearCalendar"]
+        ),
     ]
 )
