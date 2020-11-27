@@ -10,15 +10,15 @@ import Foundation
 import SwiftUI
 
 @available(iOS 13.0, *)
-class TestData: LinearProtocol, ObservableObject {
+class TestData: LinearProtocol, ObservableObject {   
     
     @Published var milestoneDays = [[MilestoneDay]]()
-    var colors: LinearColors!
+    var linearColors: LinearColors!
     
     var milestoneMonths = [MilestoneMonth]()
     
     init() {
-        colors = createColors()
+        linearColors = createColors()
         createMilestoneDaysWith()
     }
 
@@ -70,16 +70,16 @@ class TestData: LinearProtocol, ObservableObject {
     }
     
     private func createColors() -> LinearColors {
-        let lightBlack = Color(red: 30/255, green: 30/255, blue: 30/255, opacity: 1.0)
-        let nonWeekendLabel = Color(red: 103/255, green: 118/255, blue: 125/255, opacity: 1.0)
-        let weekendBackground =  Color(red: 36/255, green: 42/255, blue: 45/255, opacity: 1.0)
-        let weekendLabel = Color(red: 147/255, green: 169/255, blue: 180/255, opacity: 1.0)
-        let lightGray = Color(red: 204/255, green: 210/255, blue: 210/255, opacity: 1.0)
-        let todayLabel = Color(red: 52/255, green: 72/255, blue: 81/255, opacity: 1.0)
-        let monthDivider = Color(red: 121.0/255.0, green: 202.0/255.0, blue: 206.0/255.0, opacity: 1.0)
-        let titleSeparator = Color(red: 52.0/255.0, green: 72.0/255.0, blue: 81.0/255.0, opacity: 1.0)
+        let nonWeekendBackground = Color("NonWeekendBackground")
+        let nonWeekendLabel = Color("NonWeekendLabel")
+        let weekendBackground =  Color("WeekendBackground")
+        let weekendLabel = Color("WeekendLabel")
+        let todayLabel = Color("TodayLabel")
+        let notTodayLabel = Color("NotTodayLabel")
+        let monthDivider = Color("MonthDivider")
+        let titleSeparator = Color("TitleDivider")
         
-        return LinearColors(nonWeekendBackground: lightBlack, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: lightGray, todayLabel: todayLabel, monthDivider: monthDivider, titleSeparator: titleSeparator)
+        return LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, monthDivider: monthDivider, titleSeparator: titleSeparator)
     }
     
     /**

@@ -13,7 +13,7 @@ import SwiftUI
 @available(iOS 13.0, *)
 public protocol LinearProtocol {
     var milestoneDays: [[MilestoneDay]] { get set }
-    var colors: LinearColors! { get set }
+    var linearColors: LinearColors! { get set } //TODO: fix !
 }
 
 @available(iOS 13.0, *)
@@ -23,14 +23,19 @@ public protocol MilestoneDelegate {
 
 @available(iOS 13.0, *)
 public struct LinearCalendar: View {
-    @ObservedObject var model: TestData
-    //    @Binding var delegate: MilestoneDelegate
+    public var model: LinearProtocol
+    var delegate: MilestoneDelegate?
+    
+    public init(model: LinearProtocol, delegate: MilestoneDelegate? = nil) {
+        self.model = model
+        self.delegate = delegate
+    }
     
     public var body: some View {
         List {
             ForEach(model.milestoneDays, id: \.self) { days in
                 ForEach(days, id: \.date) { day in
-                    MilestoneCell(milestoneDay: day, colors: model.colors)
+                    MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }

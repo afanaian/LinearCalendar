@@ -13,13 +13,14 @@ import CoreData
 struct MilestoneCollection: View {
     
     var milestones: [MilestoneItem]
-    
+    var delegate: MilestoneDelegate?
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center, spacing: 0) {
                 ForEach(milestones) { milestone in
                     Button(action: {
-                        
+                        delegate?.milestoneTapped(milestone.id)
                     }) {
                         CollectionTitle(text: "\(milestone.title)")
                     }
@@ -30,7 +31,7 @@ struct MilestoneCollection: View {
     }
     
     private func milestoneImageForColor(_ milestoneColor: MilestoneColor) -> Image {
-        return milestoneColor.image.resizable(capInsets: EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10), resizingMode: .stretch)
+        return milestoneColor.image.resizable(capInsets: EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 15), resizingMode: .stretch)
     }
 }
 
@@ -42,7 +43,8 @@ struct CollectionTitle: View {
         Text(text)
             .font(.footnote)
             .foregroundColor(.white)
-            .background(Color.blue)
+            .background(Color.clear)
+            .offset(x: 10)
     }
 }
 

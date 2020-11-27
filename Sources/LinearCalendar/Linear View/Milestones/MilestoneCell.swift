@@ -14,42 +14,39 @@ import CoreData
 struct MilestoneCell: View {
     
     var milestoneDay: MilestoneDay
-    var colors: LinearColors
+    var linearColors: LinearColors
+    var delegate: MilestoneDelegate?
     
     var body: some View {
         let dayOfWeek = milestoneDay.date.dayOfWeek
-        let isWeekend = isWeekendDate(dayOfWeek)
+        let isWeekend = Calendar.current.isDateInWeekend(milestoneDay.date)
         
         HStack {
             let isToday = milestoneDay.date.isToday
             HStack {
                 Text("\(milestoneDay.date.dayOfMonth)")
-                    .foregroundColor(isToday ? colors.todayLabel : colors.notTodayLabel)
+                    .foregroundColor(isToday ? linearColors.todayLabel : linearColors.notTodayLabel)
                     .font(.footnote)
             }
             .frame(width: 20, height: 20)
-            .background(isToday ? colors.monthDivider : .clear )
+            .background(isToday ? linearColors.monthDivider : .clear )
             
-            if milestoneDay.milestones != nil {
-                MilestoneCollection(milestones: milestoneDay.milestones!)
+            if let milestones = milestoneDay.milestones {
+                MilestoneCollection(milestones: milestones, delegate: delegate)
             } else {
                 Spacer()
             }
             
             HStack {
                 Text("\(dayOfWeek)")
-                    .foregroundColor(isWeekend ? colors.weekendLabel : colors.nonWeekendLabel)
+                    .foregroundColor(isWeekend ? linearColors.weekendLabel : linearColors.nonWeekendLabel)
                     .font(.footnote)
                 
             }
             .frame(width: 20, height: 20)
         }
-        .background(isWeekend ? colors.weekendBackground : colors.nonWeekendBackground)
+        .background(isWeekend ? linearColors.weekendBackground : linearColors.nonWeekendBackground)
         .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 20, alignment: .leading)
-    }
-    
-    private func isWeekendDate(_ day: String) -> Bool {
-        return day == "S"
     }
 }
 
@@ -73,7 +70,7 @@ struct MilestoneCell_Previews: PreviewProvider {
         let m01 = MilestoneItem(title: "Test 01", color: MilestoneColor.blue, date: Date(), objectId: NSManagedObjectID())
         let m02 = MilestoneItem(title: "Test 02", color: MilestoneColor.blue, date: Date(), objectId: NSManagedObjectID())
         let milestoneDay = MilestoneDay(date: Date(), milestones: [m01, m02])
-        MilestoneCell(milestoneDay: milestoneDay, colors: testData.colors)
+        MilestoneCell(milestoneDay: milestoneDay, linearColors: testData.linearColors)
     }
 }
 #endif
