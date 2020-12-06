@@ -18,13 +18,17 @@ struct MilestoneCollection: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center, spacing: 0) {
-                ForEach(milestones) { milestone in
+                ForEach(milestones.indices) { index in
+                    let milestone = milestones[index]
+                    
                     Button(action: {
                         delegate?.milestoneTapped(milestone.id)
                     }) {
                         CollectionTitle(text: "\(milestone.title)")
                     }
                     .background(milestoneImageForColor(milestone.color))
+                    .offset(x: index > 0 ? -10 : 0)
+                    .zIndex(index == 0 ? 1 : 0)
                 }
             }
         }
