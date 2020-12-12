@@ -9,16 +9,27 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 13.0, *)
-class TestData: LinearProtocol, ObservableObject {   
+@available(iOS 14.0, *)
+class TestData: NSObject, LinearProtocol, ObservableObject {
     
     @Published var milestoneDays = [[MilestoneDay]]()
-    var linearColors: LinearColors!
+    var linearColors: LinearColors
     
     var milestoneMonths = [MilestoneMonth]()
     
-    init() {
-        linearColors = createColors()
+    override init() {
+        let nonWeekendBackground = Color("NonWeekendBackground")
+        let nonWeekendLabel = Color("NonWeekendLabel")
+        let weekendBackground =  Color("WeekendBackground")
+        let weekendLabel = Color("WeekendLabel")
+        let todayLabel = Color("TodayLabel")
+        let notTodayLabel = Color("NotTodayLabel")
+        let monthDivider = Color("MonthDivider")
+        let titleSeparator = Color("TitleDivider")
+        
+        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, monthDivider: monthDivider, titleSeparator: titleSeparator)
+        
+        super.init()
         createMilestoneDaysWith()
     }
 
@@ -69,19 +80,6 @@ class TestData: LinearProtocol, ObservableObject {
         }
     }
     
-    private func createColors() -> LinearColors {
-        let nonWeekendBackground = Color("NonWeekendBackground")
-        let nonWeekendLabel = Color("NonWeekendLabel")
-        let weekendBackground =  Color("WeekendBackground")
-        let weekendLabel = Color("WeekendLabel")
-        let todayLabel = Color("TodayLabel")
-        let notTodayLabel = Color("NotTodayLabel")
-        let monthDivider = Color("MonthDivider")
-        let titleSeparator = Color("TitleDivider")
-        
-        return LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, monthDivider: monthDivider, titleSeparator: titleSeparator)
-    }
-    
     /**
      Fetches milestones for current day sorted by their color.
      - Parameters:
@@ -95,14 +93,14 @@ class TestData: LinearProtocol, ObservableObject {
         
         let items = milestones.filter {
             return calendar.isDate($0.date, inSameDayAs: day)
-        }.sorted { $0.color.rawValue > $1.color.rawValue }
+        }.sorted { $0.date > $1.date }
         if items.count == 0 { return nil }
         
         return items
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct TestData_Previews: PreviewProvider {
     static var previews: some View {
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/

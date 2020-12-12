@@ -10,18 +10,18 @@
 import CoreData
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public protocol LinearProtocol {
     var milestoneDays: [[MilestoneDay]] { get set }
-    var linearColors: LinearColors! { get set } //TODO: fix !
+    var linearColors: LinearColors { get set }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public protocol MilestoneDelegate {
     func milestoneTapped(_ id: NSManagedObjectID)
 }
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public struct LinearCalendar: View {
     public var model: LinearProtocol
     var delegate: MilestoneDelegate?
@@ -32,23 +32,26 @@ public struct LinearCalendar: View {
     }
     
     public var body: some View {
-        List {
-            ForEach(model.milestoneDays, id: \.self) { days in
-                ForEach(days, id: \.date) { day in
-                    MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        ScrollViewReader { scrollView in
+            List {
+                ForEach(model.milestoneDays, id: \.self) { days in
+                    ForEach(days, id: \.date) { day in
+                        MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    }
                 }
             }
-        }
-        .environment(\.defaultMinListRowHeight, 20)
-        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .onAppear() {
-            UITableView.appearance().separatorStyle = .none
+            .environment(\.defaultMinListRowHeight, 20)
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .onAppear() {
+                UITableView.appearance().separatorStyle = .none
+                scrollView.scrollTo(Date())
+            }
         }
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct LinearCalendar_Previews: PreviewProvider {
     static var previews: some View {
         let testData = TestData()

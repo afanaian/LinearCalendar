@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreData
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct MilestoneCollection: View {
     
     var milestones: [MilestoneItem]
@@ -20,43 +20,44 @@ struct MilestoneCollection: View {
             HStack(alignment: .center, spacing: 0) {
                 ForEach(milestones.indices) { index in
                     let milestone = milestones[index]
+                    let includePoint: Bool = index == 0
+                    let includeEdge: Bool = index == milestones.endIndex.advanced(by: -1)
+                    let edgesWidth: CGFloat = (includePoint ? 15 : 0) + (includeEdge ? 15 : 0)
+                    let width = milestone.title.widthOfString() + edgesWidth
                     
                     Button(action: {
                         delegate?.milestoneTapped(milestone.id)
                     }) {
-                        CollectionTitle(text: "\(milestone.title)")
+                        MilestoneView(milestone: milestone, includePoint: includePoint, includeEdge: includeEdge)
+                            .frame(width: width)
+                            .environment(\.font, .caption)
                     }
-                    .background(milestoneImageForColor(milestone.color))
-                    .offset(x: index > 0 ? -10 : 0)
-                    .zIndex(index == 0 ? 1 : 0)
                 }
             }
+            .frame(height: 20)
         }
     }
-    
-    private func milestoneImageForColor(_ milestoneColor: MilestoneColor) -> Image {
-        return milestoneColor.image.resizable(capInsets: EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 15), resizingMode: .stretch)
+}
+
+extension String {
+    func widthOfString() -> CGFloat {
+        let attributes = [NSAttributedString.Key.font : self]
+        let attString = NSAttributedString(string: self, attributes: attributes)
+        let framesetter = CTFramesetterCreateWithAttributedString(attString)
+        return CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRange(), nil, CGSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude), nil).width
     }
 }
 
-@available(iOS 13.0, *)
-struct CollectionTitle: View {
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.footnote)
-            .foregroundColor(.white)
-            .background(Color.clear)
-            .offset(x: 10)
-    }
-}
-
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct MilestoneCollection_Previews: PreviewProvider {
     static var previews: some View {
-        let milestones = [MilestoneItem(title: "Test 01", color: MilestoneColor.blue, date: Date(), objectId: NSManagedObjectID())]
-        MilestoneCollection(milestones: milestones)
+        let items = [
+            MilestoneItem(title: "Tesststsdfd", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 02", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 03", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 04", color: .blue, date: Date(), objectId: NSManagedObjectID())
+        ]
+        MilestoneCollection(milestones: items)
     }
 }
 
