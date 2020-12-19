@@ -76,7 +76,8 @@ public class MilestoneDay: Comparable, Hashable {
     }
     
     public static func == (lhs: MilestoneDay, rhs: MilestoneDay) -> Bool {
-        return lhs.date == rhs.date && lhs.milestones == rhs.milestones
+        let sameDay: Bool = Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .day) == .orderedSame
+        return sameDay && lhs.milestones == rhs.milestones
     }
     
     public static func < (lhs: MilestoneDay, rhs: MilestoneDay) -> Bool {

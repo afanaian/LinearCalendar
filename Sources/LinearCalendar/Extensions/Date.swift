@@ -8,6 +8,12 @@
 import Foundation
 
 extension Date {
+    var dateWithoutTime: Date {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        let date = Calendar.current.date(from: components)
+        return date ?? Date()
+    }
+    
     func isSameDayAs(_ date: Date) -> Bool {
         if Calendar.current.dateComponents([.day], from: self, to: date).day == 0 {
             return true

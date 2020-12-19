@@ -12,7 +12,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 public protocol LinearProtocol {
-    var milestoneDays: [[MilestoneDay]] { get set }
+    var milestoneDays: [MilestoneDay] { get set }
     var linearColors: LinearColors { get set }
 }
 
@@ -34,18 +34,17 @@ public struct LinearCalendar: View {
     public var body: some View {
         ScrollViewReader { scrollView in
             List {
-                ForEach(model.milestoneDays, id: \.self) { days in
-                    ForEach(days, id: \.date) { day in
-                        MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    }
+                ForEach(model.milestoneDays, id: \.date) { day in
+                    MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .id(day.date.dateWithoutTime)
                 }
             }
             .environment(\.defaultMinListRowHeight, 20)
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .frame(maxHeight: .infinity, alignment: .leading)
             .onAppear() {
                 UITableView.appearance().separatorStyle = .none
-                scrollView.scrollTo(Date())
+                scrollView.scrollTo(Date().dateWithoutTime, anchor: .bottom)
             }
         }
     }
@@ -56,6 +55,7 @@ struct LinearCalendar_Previews: PreviewProvider {
     static var previews: some View {
         let testData = TestData()
         LinearCalendar(model: testData)
+            .environment(\.font, .caption)
     }
 }
 

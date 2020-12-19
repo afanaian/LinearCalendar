@@ -19,10 +19,11 @@ struct MilestoneCollection: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center, spacing: 0) {
                 ForEach(milestones.indices) { index in
+                    let padding: CGFloat = 2
                     let milestone = milestones[index]
                     let includePoint: Bool = index == 0
                     let includeEdge: Bool = index == milestones.endIndex.advanced(by: -1)
-                    let edgesWidth: CGFloat = (includePoint ? 15 : 0) + (includeEdge ? 15 : 0)
+                    let edgesWidth: CGFloat = (includePoint ? 15 : padding) + (includeEdge ? 15 : padding)
                     let width = milestone.title.widthOfString() + edgesWidth
                     
                     Button(action: {
@@ -30,8 +31,8 @@ struct MilestoneCollection: View {
                     }) {
                         MilestoneView(milestone: milestone, includePoint: includePoint, includeEdge: includeEdge)
                             .frame(width: width)
-                            .environment(\.font, .caption)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .frame(height: 20)
@@ -52,12 +53,12 @@ extension String {
 struct MilestoneCollection_Previews: PreviewProvider {
     static var previews: some View {
         let items = [
-            MilestoneItem(title: "Tesststsdfd", color: .blue, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 02", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 03", color: .blue, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 04", color: .blue, date: Date(), objectId: NSManagedObjectID())
+            MilestoneItem(title: "Tesststsdfd 😶 disgrace", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test2", color: .blue, date: Date(), objectId: NSManagedObjectID())
         ]
         MilestoneCollection(milestones: items)
+            .environment(\.font, .caption)
+
     }
 }
 

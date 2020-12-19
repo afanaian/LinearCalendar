@@ -12,7 +12,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 class TestData: NSObject, LinearProtocol, ObservableObject {
     
-    @Published var milestoneDays = [[MilestoneDay]]()
+    @Published var milestoneDays = [MilestoneDay]()
     var linearColors: LinearColors
     
     var milestoneMonths = [MilestoneMonth]()
@@ -34,15 +34,14 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
     }
 
     private func createMilestoneDaysWith(_ milestones: [MilestoneItem]? = nil) {
-        var monthArray = [MilestoneDay]()
-        let calendar = Calendar.current
+        milestoneDays.removeAll()
         
+        let calendar = Calendar.current
         let startDate = Date.dateForTodayMinusAYear()
         let endDate = Date.dateForTodayPlusAYear()
         let components = DateComponents(hour: 0, minute: 0, second: 0)
         
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: startDate)
-        var month = dateComponents.month
         
         calendar.enumerateDates(startingAfter: startDate, matching: components, matchingPolicy: .nextTime) { (date, strict, stop) in
             guard let date = date else { stop = true; return; }
@@ -50,30 +49,7 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
             if date < endDate {
                 let milestoneItems = self.milestones(milestones: milestones, forDay: date)
                 let milestoneData = MilestoneDay(date: date, milestones: milestoneItems)
-                
-                //Keep adding to current month until we reach the following
-                let nextDay = calendar.date(byAdding: .day, value: 1, to: date)!
-                let nextDateComponents = calendar.dateComponents([.month], from: nextDay)
-                let nextMonth = nextDateComponents.month
-                
-                monthArray.append(milestoneData)
-                
-                if month != nextMonth {
-                    monthArray.sort()
-                    milestoneDays.append(monthArray)
-                    
-                    let milestoneMonth = monthArray.filter { (milestoneDays) -> Bool in
-                        guard let milestones = milestoneDays.milestones else { return false }
-                        return milestones.count > 0
-                    }.sorted(by: > )
-                    
-                    if milestoneMonth.count > 0 {
-                        //milestoneMonths.append(MilestoneMonth(date: date, milestoneDays: milestoneMonth))
-                    }
-                    
-                    monthArray.removeAll()
-                    month = nextMonth
-                }
+                milestoneDays.append(milestoneData)
             } else {
                 stop = true
             }
@@ -99,12 +75,4 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
         return items
     }
 }
-
-@available(iOS 14.0, *)
-struct TestData_Previews: PreviewProvider {
-    static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-    }
-}
-
 #endif
