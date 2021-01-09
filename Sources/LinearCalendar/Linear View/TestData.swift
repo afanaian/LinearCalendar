@@ -14,20 +14,19 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
     
     @Published var milestoneDays = [MilestoneDay]()
     var linearColors: LinearColors
-    
-    var milestoneMonths = [MilestoneMonth]()
-    
-    override init() {
-        let nonWeekendBackground = Color("NonWeekendBackground")
-        let nonWeekendLabel = Color("NonWeekendLabel")
-        let weekendBackground =  Color("WeekendBackground")
-        let weekendLabel = Color("WeekendLabel")
-        let todayLabel = Color("TodayLabel")
-        let notTodayLabel = Color("NotTodayLabel")
-        let monthDivider = Color("MonthDivider")
-        let titleSeparator = Color("TitleDivider")
         
-        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, monthDivider: monthDivider, titleSeparator: titleSeparator)
+    override init() {
+        let nonWeekendBackground = Color.white
+        let nonWeekendLabel = Color.white
+        let weekendBackground =  Color.gray
+        let weekendLabel = Color.yellow
+        let todayLabel = Color.red
+        let todayBackground = Color.gray
+        let notTodayLabel = Color.gray
+        let monthDivider = Color.blue
+        let titleSeparator = Color.gray
+        
+        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, todayBackground: todayBackground, monthDivider: monthDivider, titleSeparator: titleSeparator)
         
         super.init()
         createMilestoneDaysWith()
@@ -40,9 +39,7 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
         let startDate = Date.dateForTodayMinusAYear()
         let endDate = Date.dateForTodayPlusAYear()
         let components = DateComponents(hour: 0, minute: 0, second: 0)
-        
-        let dateComponents = calendar.dateComponents([.year, .month, .day], from: startDate)
-        
+                
         calendar.enumerateDates(startingAfter: startDate, matching: components, matchingPolicy: .nextTime) { (date, strict, stop) in
             guard let date = date else { stop = true; return; }
             

@@ -53,7 +53,7 @@ extension String {
 struct MilestoneCollection_Previews: PreviewProvider {
     static var previews: some View {
         let items = [
-            MilestoneItem(title: "Tesststsdfd 😶 disgrace", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 😶 disgrace", color: .blue, date: Date(), objectId: NSManagedObjectID()),
             MilestoneItem(title: "Test2", color: .blue, date: Date(), objectId: NSManagedObjectID())
         ]
         MilestoneCollection(milestones: items)

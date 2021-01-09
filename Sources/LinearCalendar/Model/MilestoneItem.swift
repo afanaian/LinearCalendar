@@ -11,7 +11,18 @@ import UIKit
 import SwiftUI
 import CoreData //TODO: SIR
 
-/** Colors used throughout the Calendar View */
+/**
+Colors used throughout the Calendar View.
+
+   - Parameters:
+      - nonWeekendBackground: background color used for entire week day
+      - weekendBackground: background color used for entire weekend day
+      - nonWeekendLabel: the label text color for week days
+      - notTodayLabel: the label text color for days that are not today
+      - todayLabel: the label text color for the current day
+      - monthDivider: The divider color used between each month
+      - titleDivider: There's a line between day of the month and milestones. This is the color
+*/
 @available(iOS 14.0, *)
 public struct LinearColors {
     public let nonWeekendBackground: Color
@@ -20,16 +31,18 @@ public struct LinearColors {
     public let weekendLabel: Color
     public let notTodayLabel: Color
     public let todayLabel: Color
+    public let todayBackground: Color
     public let monthDivider: Color
     public let titleDivider: Color
     
-    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?, notTodayLabel: Color?, todayLabel: Color?, monthDivider: Color?, titleSeparator: Color?) {
+    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?,  notTodayLabel: Color?, todayLabel: Color?, todayBackground: Color?, monthDivider: Color?, titleSeparator: Color?) {
         self.nonWeekendBackground = nonWeekendBackground ?? .white
         self.weekendBackground = weekendBackground ?? .white
         self.nonWeekendLabel = nonWeekendLabel ?? .white
         self.weekendLabel = weekendLabel ?? .white
         self.notTodayLabel = notTodayLabel ?? .white
         self.todayLabel = todayLabel ?? .white
+        self.todayBackground = todayBackground ?? .white
         self.monthDivider = monthDivider ?? .white
         self.titleDivider = titleSeparator ?? .white
     }
@@ -87,13 +100,14 @@ public class MilestoneDay: Comparable, Hashable {
 
 /**
  Milestone items are used to display in the calendar view. Must be equatable.
- Parameters:
- - Title
- - Second title - separated by - from title ex: "title - second title"
- - Color - used for milestone background color. Does not have a default value.
- - Date - Used to put the milestone in the right day
- - object ID
- - Image - Optional image. Must be 10x10. Added at end of titles. ex. "title - second title (image)"
+ 
+ - Parameters:
+ - title: Title of the milestone.
+ - subTitle: Optional separated by "-" from title ex: "title - subtitle"
+ - color: used for milestone background color. Does not have a default value
+ - date: used to put the milestone in the right day
+ - id: NSManagedObjectID (used on MilestoneDelegate)
+ - image: Optional image. Must be 10x10. Added at end of titles. ex. "title - second title (image)"
  */
 @available(iOS 14.0, *)
 public struct MilestoneItem: Equatable, Identifiable {
@@ -114,9 +128,7 @@ public struct MilestoneItem: Equatable, Identifiable {
     }
     
     public static func ==(lhs: MilestoneItem, rhs: MilestoneItem) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.title == rhs.title &&
-            lhs.subTitle == rhs.subTitle
+        return lhs.id == rhs.id
     }
 }
 

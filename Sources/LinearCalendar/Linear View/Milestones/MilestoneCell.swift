@@ -24,13 +24,14 @@ struct MilestoneCell: View {
             
             HStack {
                 let isToday = milestoneDay.date.isToday
-                HStack {
+                HStack(alignment: .center) {
                     Text("\(milestoneDay.date.dayOfMonth)")
                         .foregroundColor(isToday ? linearColors.todayLabel : linearColors.notTodayLabel)
                         .font(.footnote)
                 }
                 .frame(width: 20, height: 20)
-                .background(isToday ? linearColors.monthDivider : .clear )
+                .background(isToday ? linearColors.todayBackground : .clear )
+                .overlay(Rectangle().frame(width: 1, height: nil, alignment: .trailing).foregroundColor(linearColors.titleDivider), alignment: .trailing)
                 
                 if let milestones = milestoneDay.milestones {
                     MilestoneCollection(milestones: milestones, delegate: delegate)
@@ -62,6 +63,7 @@ struct MilestoneCell_Previews: PreviewProvider {
         
         let milestoneDay = MilestoneDay(date: Date(), milestones: [m01, m02, m03])
         MilestoneCell(milestoneDay: milestoneDay, linearColors: testData.linearColors)
+            .background(Color.gray)
     }
 }
 #endif
