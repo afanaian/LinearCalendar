@@ -23,7 +23,7 @@ struct MilestoneCollection: View {
                     let milestone = milestones[index]
                     let includePoint: Bool = index == 0
                     let includeEdge: Bool = index == milestones.endIndex.advanced(by: -1)
-                    let edgesWidth: CGFloat = (includePoint ? 15 : padding) + (includeEdge ? 15 : padding)
+                    let edgesWidth: CGFloat = (includePoint ? 15 : padding)
                     let width = milestone.title.widthOfString() + edgesWidth
                     
                     Button(action: {
