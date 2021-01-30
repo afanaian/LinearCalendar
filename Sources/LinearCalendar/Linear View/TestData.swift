@@ -22,11 +22,10 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
         let weekendLabel = Color.yellow
         let todayLabel = Color.red
         let todayBackground = Color.gray
-        let notTodayLabel = Color.gray
         let monthDivider = Color.blue
         let titleSeparator = Color.gray
         
-        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, notTodayLabel: notTodayLabel, todayLabel: todayLabel, todayBackground: todayBackground, monthDivider: monthDivider, titleSeparator: titleSeparator)
+        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, todayLabel: todayLabel, todayBackground: todayBackground, monthDivider: monthDivider, titleSeparator: titleSeparator)
         
         super.init()
         createMilestoneDaysWith()

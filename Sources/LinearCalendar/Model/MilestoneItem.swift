@@ -29,18 +29,16 @@ public struct LinearColors {
     public let weekendBackground: Color
     public let nonWeekendLabel: Color
     public let weekendLabel: Color
-    public let notTodayLabel: Color
     public let todayLabel: Color
     public let todayBackground: Color
     public let monthDivider: Color
     public let titleDivider: Color
     
-    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?,  notTodayLabel: Color?, todayLabel: Color?, todayBackground: Color?, monthDivider: Color?, titleSeparator: Color?) {
+    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?, todayLabel: Color?, todayBackground: Color?, monthDivider: Color?, titleSeparator: Color?) {
         self.nonWeekendBackground = nonWeekendBackground ?? .white
         self.weekendBackground = weekendBackground ?? .white
         self.nonWeekendLabel = nonWeekendLabel ?? .white
         self.weekendLabel = weekendLabel ?? .white
-        self.notTodayLabel = notTodayLabel ?? .white
         self.todayLabel = todayLabel ?? .white
         self.todayBackground = todayBackground ?? .white
         self.monthDivider = monthDivider ?? .white

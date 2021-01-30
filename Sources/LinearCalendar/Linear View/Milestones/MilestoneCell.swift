@@ -26,7 +26,7 @@ struct MilestoneCell: View {
                 let isToday = milestoneDay.date.isToday
                 HStack(alignment: .center) {
                     Text("\(milestoneDay.date.dayOfMonth)")
-                        .foregroundColor(isToday ? linearColors.todayLabel : linearColors.notTodayLabel)
+                        .foregroundColor(isToday ? linearColors.todayLabel : linearColors.nonWeekendLabel)
                         .font(.footnote)
                 }
                 .frame(width: 20, height: 20)
