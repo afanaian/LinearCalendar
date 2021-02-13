@@ -15,17 +15,14 @@ struct MilestoneView: View {
     var includeEdge: Bool = false
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                MilestoneShape(includePoint: includePoint, includeEdge: includeEdge)
-                    .fill(milestone.color)
-                
-                Text(milestone.title)
-                    .fixedSize()
-                    .foregroundColor(.white)
-                    .offset(x: includePoint ? 15 : 0)
-            }
-            .frame(width: geometry.size.width, height: geometry.size.height)
+        ZStack(alignment: .leading) {
+            MilestoneShape(includePoint: includePoint, includeEdge: includeEdge)
+                .fill(milestone.color)
+            
+            Text(milestone.title)
+                .fixedSize()
+                .foregroundColor(.white)
+                .offset(x: includePoint ? 15 : 0)
         }
     }
 }

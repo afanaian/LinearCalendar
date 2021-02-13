@@ -29,13 +29,16 @@ public struct LinearCalendar: View {
     public init(model: LinearProtocol, delegate: MilestoneDelegate? = nil) {
         self.model = model
         self.delegate = delegate
+        
+        UITableView.appearance().showsVerticalScrollIndicator = false
+        UITableView.appearance().separatorStyle = .none
     }
     
     public var body: some View {
         ScrollViewReader { scrollView in
             List {
                 ForEach(model.milestoneDays, id: \.date) { day in
-                    MilestoneCell(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
+                    MilestoneDayView(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         .id(day.date.dateWithoutTime)
                 }
@@ -43,7 +46,6 @@ public struct LinearCalendar: View {
             .environment(\.defaultMinListRowHeight, 20)
             .frame(maxHeight: .infinity, alignment: .leading)
             .onAppear() {
-                UITableView.appearance().separatorStyle = .none
                 scrollView.scrollTo(Date().dateWithoutTime, anchor: .bottom)
             }
         }
