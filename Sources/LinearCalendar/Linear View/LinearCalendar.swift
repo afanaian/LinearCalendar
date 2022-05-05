@@ -37,14 +37,15 @@ public struct LinearCalendar: View {
     public var body: some View {
         ScrollViewReader { scrollView in
             List {
-                ForEach(model.milestoneDays, id: \.date) { day in
+                ForEach(model.milestoneDays, id: \.self) { day in
                     MilestoneDayView(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         .id(day.date.dateWithoutTime)
                 }
             }
+            .listStyle(PlainListStyle())
             .environment(\.defaultMinListRowHeight, 20)
-            .frame(maxHeight: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .onAppear() {
                 scrollView.scrollTo(Date().dateWithoutTime, anchor: .bottom)
             }
