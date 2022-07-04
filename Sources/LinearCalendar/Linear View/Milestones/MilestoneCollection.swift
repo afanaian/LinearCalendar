@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreData
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct MilestoneCollection: View {
     
     var milestones: [MilestoneItem]
@@ -18,20 +18,17 @@ struct MilestoneCollection: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center, spacing: 0) {
-                ForEach(milestones.indices) { index in
-                    let padding: CGFloat = 2
+                ForEach(milestones.indices, id: \.self) { index in
                     let milestone = milestones[index]
                     let includePoint: Bool = index == 0
                     let includeEdge: Bool = index == milestones.endIndex.advanced(by: -1)
-                    let edgesWidth: CGFloat = (includePoint ? 15 : padding)
-                    let width = milestone.title.widthOfString() + edgesWidth
-                    
+
                     Button(action: {
                         delegate?.milestoneTapped(milestone.id)
                     }) {
                         MilestoneView(milestone: milestone, includePoint: includePoint, includeEdge: includeEdge)
-                            .frame(width: width)
                     }
+                    .offset(x: includePoint ? 0 : 15)
                     .buttonStyle(PlainButtonStyle())
                 }
             }
@@ -49,7 +46,7 @@ extension String {
     }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct MilestoneCollection_Previews: PreviewProvider {
     static var previews: some View {
         let items = [

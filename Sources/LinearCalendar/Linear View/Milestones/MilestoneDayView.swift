@@ -10,7 +10,7 @@
 import SwiftUI
 import CoreData
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct MilestoneDayView: View {
     
     var milestoneDay: MilestoneDay
@@ -34,7 +34,8 @@ struct MilestoneDayView: View {
                 .overlay(
                     Rectangle()
                         .frame(width: 1, alignment: .trailing)
-                        .foregroundColor(linearColors.titleDivider), alignment: .trailing)
+                        .foregroundColor(linearColors.titleDivider), alignment: .trailing
+                )
             
             if let milestones = milestoneDay.milestones {
                 MilestoneCollection(milestones: milestones, delegate: delegate)
@@ -56,24 +57,22 @@ struct MilestoneDayView: View {
     }
 }
 
-private struct DividerLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint.zero)
-        path.addLine(to: CGPoint(x: rect.width, y: 10))
-        return path
-    }
-}
-
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct MilestoneCell_Previews: PreviewProvider {
     static var previews: some View {
         let testData = TestData()
-        let m01 = MilestoneItem(title: "Test 01", color: .blue, date: Date(), objectId: NSManagedObjectID())
-        let m02 = MilestoneItem(title: "Test 02", color: .blue, date: Date(), objectId: NSManagedObjectID())
-        let m03 = MilestoneItem(title: "Test 02", color: .red, date: Date(), objectId: NSManagedObjectID())
-        
-        let milestoneDay = MilestoneDay(date: Date(), milestones: [m01, m02, m03])
+        let milestones = [
+            MilestoneItem(title: "Test 01", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 02", color: .blue, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 03", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 04", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 05", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 06", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 07", color: .red, date: Date(), objectId: NSManagedObjectID()),
+            MilestoneItem(title: "Test 08", color: .red, date: Date(), objectId: NSManagedObjectID())
+        ]
+
+        let milestoneDay = MilestoneDay(date: Date(), milestones: milestones)
         MilestoneDayView(milestoneDay: milestoneDay, linearColors: testData.linearColors)
             .background(Color.gray)
     }

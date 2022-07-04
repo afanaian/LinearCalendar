@@ -15,15 +15,16 @@ struct MilestoneView: View {
     var includeEdge: Bool = false
     
     var body: some View {
-        ZStack(alignment: .leading) {
+        ZStack {
             MilestoneShape(includePoint: includePoint, includeEdge: includeEdge)
                 .fill(milestone.color)
             
             Text(milestone.title)
-                .fixedSize()
+                .lineLimit(1)
                 .foregroundColor(.white)
                 .offset(x: includePoint ? 15 : 0)
         }
+        .fixedSize()
     }
 }
 
@@ -35,18 +36,21 @@ private struct MilestoneShape: Shape {
         let centerY = rect.height / 2
         var path = Path()
         
+        let width = rect.width + (includePoint ? 15 : 0)
+        
+        // Adds leading triangle if needed
         if includePoint {
             path.move(to: CGPoint(x: 0, y: centerY))
             path.addLine(to: CGPoint(x: 15, y: 0))
         } else {
             path.move(to: CGPoint.zero)
         }
-        path.addLine(to: CGPoint(x: rect.width, y: 0))
+        path.addLine(to: CGPoint(x: width, y: 0))
         
         if includeEdge {
-            path.addArc(center: CGPoint(x: rect.width, y: centerY), radius: 10, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
+            path.addArc(center: CGPoint(x: width, y: centerY), radius: 10, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
         }
-        path.addLine(to: CGPoint(x: rect.width, y: rect.height))
+        path.addLine(to: CGPoint(x: width, y: rect.height))
         path.addLine(to: CGPoint(x: includePoint ? 15 : 0, y: rect.height))
         path.closeSubpath()
         return path
@@ -56,7 +60,7 @@ private struct MilestoneShape: Shape {
 struct FillMilestoneShape_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
-            let milestoneItem = MilestoneItem(title: "Testing 😶", color: .red, date: Date(), objectId: NSManagedObjectID())
+            let milestoneItem = MilestoneItem(title: "Testing 😶 Night", color: .red, date: Date(), objectId: NSManagedObjectID())
             MilestoneView(milestone: milestoneItem, includePoint: true, includeEdge: true)
                 .environment(\.font, .caption)
                 .frame(width: milestoneItem.title.widthOfString() + 30, height: 20)

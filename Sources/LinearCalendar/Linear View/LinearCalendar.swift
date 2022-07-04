@@ -10,28 +10,25 @@
 import CoreData
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public protocol LinearProtocol {
     var milestoneDays: [MilestoneDay] { get set }
     var linearColors: LinearColors { get set }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public protocol MilestoneDelegate {
     func milestoneTapped(_ id: NSManagedObjectID)
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public struct LinearCalendar: View {
-    public var model: LinearProtocol
+    var model: LinearProtocol
     var delegate: MilestoneDelegate?
     
     public init(model: LinearProtocol, delegate: MilestoneDelegate? = nil) {
         self.model = model
         self.delegate = delegate
-        
-        UITableView.appearance().showsVerticalScrollIndicator = false
-        UITableView.appearance().separatorStyle = .none
     }
     
     public var body: some View {
@@ -53,7 +50,7 @@ public struct LinearCalendar: View {
     }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct LinearCalendar_Previews: PreviewProvider {
     static var previews: some View {
         let testData = TestData()
