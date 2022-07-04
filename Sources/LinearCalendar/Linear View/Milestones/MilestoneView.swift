@@ -15,45 +15,55 @@ struct MilestoneView: View {
     var includeEdge: Bool = false
     
     var body: some View {
-        ZStack {
-            MilestoneShape(includePoint: includePoint, includeEdge: includeEdge)
-                .fill(milestone.color)
+        HStack(alignment: .center, spacing: 0) {
+            if includePoint {
+                MilestonePoint(fillColor: milestone.color)
+                    .frame(width: 15, height: 20)
+            }
             
             Text(milestone.title)
                 .lineLimit(1)
                 .foregroundColor(.white)
-                .offset(x: includePoint ? 15 : 0)
+                .background(
+                    Rectangle()
+                        .fill(milestone.color)
+                )
+            
+            if includeEdge {
+                MilestoneEdge(fillColor: milestone.color)
+            }
         }
-        .fixedSize()
     }
 }
 
-private struct MilestoneShape: Shape {
-    var includePoint: Bool = false
-    var includeEdge: Bool = false
+private struct MilestonePoint: View {
+    var fillColor: Color
     
-    func path(in rect: CGRect) -> Path {
-        let centerY = rect.height / 2
-        var path = Path()
-        
-        let width = rect.width + (includePoint ? 15 : 0)
-        
-        // Adds leading triangle if needed
-        if includePoint {
-            path.move(to: CGPoint(x: 0, y: centerY))
-            path.addLine(to: CGPoint(x: 15, y: 0))
-        } else {
-            path.move(to: CGPoint.zero)
+    var body: some View {
+        GeometryReader { geometry in
+            let midY = geometry.size.height / 2
+            
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: midY))
+                path.addLine(to: CGPoint(x: geometry.size.width, y: 0))
+                path.addLine(to: CGPoint(x: geometry.size.width, y: geometry.size.height))
+                path.closeSubpath()
+                }
+            .fill(fillColor)
         }
-        path.addLine(to: CGPoint(x: width, y: 0))
-        
-        if includeEdge {
-            path.addArc(center: CGPoint(x: width, y: centerY), radius: 10, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
+    }
+}
+
+private struct MilestoneEdge: View {
+    var fillColor: Color
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                path.addArc(center: CGPoint(x: 0, y: geometry.size.height / 2), radius: 10, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
+            }
+            .fill(fillColor)
         }
-        path.addLine(to: CGPoint(x: width, y: rect.height))
-        path.addLine(to: CGPoint(x: includePoint ? 15 : 0, y: rect.height))
-        path.closeSubpath()
-        return path
     }
 }
 

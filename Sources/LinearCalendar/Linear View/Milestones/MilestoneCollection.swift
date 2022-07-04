@@ -28,7 +28,6 @@ struct MilestoneCollection: View {
                     }) {
                         MilestoneView(milestone: milestone, includePoint: includePoint, includeEdge: includeEdge)
                     }
-                    .offset(x: includePoint ? 0 : 15)
                     .buttonStyle(PlainButtonStyle())
                 }
             }
