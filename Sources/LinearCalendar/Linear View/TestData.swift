@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 class TestData: NSObject, LinearProtocol, ObservableObject {
     
     @Published var milestoneDays = [MilestoneDay]()
@@ -25,7 +25,7 @@ class TestData: NSObject, LinearProtocol, ObservableObject {
         let monthDivider = Color.blue
         let titleSeparator = Color.gray
         
-        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, todayLabel: todayLabel, todayBackground: todayBackground, monthDivider: monthDivider, titleSeparator: titleSeparator)
+        linearColors = LinearColors(nonWeekendBackground: nonWeekendBackground, weekendBackground: weekendBackground, nonWeekendLabel: nonWeekendLabel, weekendLabel: weekendLabel, todayLabel: todayLabel, todayBackground: todayBackground, divider: Color.blue, monthDivider: monthDivider, titleSeparator: titleSeparator)
         
         super.init()
         createMilestoneDaysWith()

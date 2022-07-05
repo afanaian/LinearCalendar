@@ -21,7 +21,7 @@ struct MilestoneDayView: View {
         let dayOfWeek = milestoneDay.date.dayOfWeek
         let isWeekend = Calendar.current.isDateInWeekend(milestoneDay.date)
         let newMonth = milestoneDay.date.dayOfMonth == 1
-        let dividerColor = newMonth ? linearColors.monthDivider : linearColors.weekendBackground
+        let dividerColor = newMonth ? linearColors.monthDivider : linearColors.divider
         
         HStack(alignment: .center, spacing: 0) {
             let isToday = milestoneDay.date.isToday
@@ -33,7 +33,7 @@ struct MilestoneDayView: View {
                 .background(isToday ? linearColors.todayBackground : .clear )
                 .overlay(
                     Rectangle()
-                        .frame(width: 1, alignment: .trailing)
+                        .frame(width: 1)
                         .foregroundColor(linearColors.titleDivider), alignment: .trailing
                 )
             
@@ -51,7 +51,7 @@ struct MilestoneDayView: View {
         .background(isWeekend ? linearColors.weekendBackground : linearColors.nonWeekendBackground)
         .overlay(
             Rectangle()
-                .frame(height: 1, alignment: .trailing)
+                .frame(height: 1)
                 .foregroundColor(dividerColor), alignment: .top
         )
     }

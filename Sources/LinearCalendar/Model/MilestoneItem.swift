@@ -23,7 +23,7 @@ Colors used throughout the Calendar View.
       - monthDivider: The divider color used between each month
       - titleDivider: There's a line between day of the month and milestones. This is the color
 */
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public struct LinearColors {
     public let nonWeekendBackground: Color
     public let weekendBackground: Color
@@ -31,22 +31,24 @@ public struct LinearColors {
     public let weekendLabel: Color
     public let todayLabel: Color
     public let todayBackground: Color
+    public let divider: Color
     public let monthDivider: Color
     public let titleDivider: Color
     
-    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?, todayLabel: Color?, todayBackground: Color?, monthDivider: Color?, titleSeparator: Color?) {
+    public init(nonWeekendBackground: Color?, weekendBackground: Color?, nonWeekendLabel: Color?, weekendLabel: Color?, todayLabel: Color?, todayBackground: Color?, divider: Color?, monthDivider: Color?, titleSeparator: Color?) {
         self.nonWeekendBackground = nonWeekendBackground ?? .white
         self.weekendBackground = weekendBackground ?? .white
         self.nonWeekendLabel = nonWeekendLabel ?? .white
         self.weekendLabel = weekendLabel ?? .white
         self.todayLabel = todayLabel ?? .white
         self.todayBackground = todayBackground ?? .white
+        self.divider = divider ?? .white
         self.monthDivider = monthDivider ?? .white
         self.titleDivider = titleSeparator ?? .white
     }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public class MilestoneMonth: Comparable {
     public var date: Date
     public var milestoneDays: [MilestoneDay]
@@ -72,7 +74,7 @@ public class MilestoneMonth: Comparable {
 /**
  MilestoneData - Use a two dimentional array separated by date && milestones
  */
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public class MilestoneDay: Comparable, Hashable {
     public var date: Date
     public var milestones: [MilestoneItem]?
@@ -107,7 +109,7 @@ public class MilestoneDay: Comparable, Hashable {
  - id: NSManagedObjectID (used on MilestoneDelegate)
  - image: Optional image. Must be 10x10. Added at end of titles. ex. "title - second title (image)"
  */
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 public struct MilestoneItem: Equatable, Identifiable {
     public let title: String
     public let subTitle: String?

@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 
+@available(iOS 15.0, *)
 struct MilestoneView: View {
     
     let milestone: MilestoneItem
@@ -48,7 +49,7 @@ private struct MilestonePoint: View {
                 path.addLine(to: CGPoint(x: geometry.size.width, y: 0))
                 path.addLine(to: CGPoint(x: geometry.size.width, y: geometry.size.height))
                 path.closeSubpath()
-                }
+            }
             .fill(fillColor)
         }
     }
@@ -60,13 +61,14 @@ private struct MilestoneEdge: View {
     var body: some View {
         GeometryReader { geometry in
             Path { path in
-                path.addArc(center: CGPoint(x: 0, y: geometry.size.height / 2), radius: 10, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
+                path.addArc(center: CGPoint(x: 0, y: geometry.size.height / 2), radius: geometry.size.height / 2, startAngle: .degrees(90), endAngle: .degrees(270), clockwise: true)
             }
             .fill(fillColor)
         }
     }
 }
 
+@available(iOS 15.0, *)
 struct FillMilestoneShape_Previews: PreviewProvider {
     static var previews: some View {
         HStack {

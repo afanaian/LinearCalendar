@@ -38,6 +38,7 @@ public struct LinearCalendar: View {
                     MilestoneDayView(milestoneDay: day, linearColors: model.linearColors, delegate: delegate)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         .id(day.date.dateWithoutTime)
+                        .listRowSeparator(.hidden)
                 }
             }
             .listStyle(PlainListStyle())
