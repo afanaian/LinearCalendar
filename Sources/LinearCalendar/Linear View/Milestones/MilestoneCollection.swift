@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreData
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 struct MilestoneCollection: View {
     
     var milestones: [MilestoneItem]
@@ -45,12 +45,12 @@ extension String {
     }
 }
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 struct MilestoneCollection_Previews: PreviewProvider {
     static var previews: some View {
         let items = [
-            MilestoneItem(title: "Test 😶 disgrace", color: .blue, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test2", color: .blue, date: Date(), objectId: NSManagedObjectID())
+            MilestoneItem(id: UUID().uuidString, title: "Test 😶 disgrace", color: .blue, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test2", color: .blue, date: Date())
         ]
         MilestoneCollection(milestones: items)
             .environment(\.font, .caption)

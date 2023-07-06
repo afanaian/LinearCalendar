@@ -10,23 +10,33 @@
 import CoreData
 import SwiftUI
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 public protocol LinearProtocol {
     var milestoneDays: [MilestoneDay] { get set }
     var linearColors: LinearColors { get set }
 }
 
-@available(iOS 15.0, *)
-public protocol MilestoneDelegate {
-    func milestoneTapped(_ id: NSManagedObjectID)
+@available(iOS 16.0, *)
+open class LinearCalendarViewModel: ObservableObject {
+    @Published open var milestoneDays = [MilestoneDay]()
+    public var linearColors: LinearColors
+    
+    public init(linearColors: LinearColors) {
+        self.linearColors = linearColors
+    }
 }
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
+public protocol MilestoneDelegate {
+    func milestoneTapped(_ id: String)
+}
+
+@available(iOS 16.0, *)
 public struct LinearCalendar: View {
-    var model: LinearProtocol
+    var model: LinearCalendarViewModel
     var delegate: MilestoneDelegate?
     
-    public init(model: LinearProtocol, delegate: MilestoneDelegate? = nil) {
+    public init(model: LinearCalendarViewModel, delegate: MilestoneDelegate? = nil) {
         self.model = model
         self.delegate = delegate
     }
@@ -45,20 +55,21 @@ public struct LinearCalendar: View {
             .environment(\.defaultMinListRowHeight, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .onAppear() {
-                scrollView.scrollTo(Date().dateWithoutTime, anchor: .bottom)
+                //TODO: ????
+//                scrollView.scrollTo(Date().dateWithoutTime, anchor: .bottom)
             }
         }
     }
 }
 
-@available(iOS 15.0, *)
-struct LinearCalendar_Previews: PreviewProvider {
-    static var previews: some View {
-        let testData = TestData()
-        LinearCalendar(model: testData)
-            .environment(\.font, .caption)
-    }
-}
+//@available(iOS 15.0, *)
+//struct LinearCalendar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let testData = TestData()
+//        LinearCalendar(model: testData)
+//            .environment(\.font, .caption)
+//    }
+//}
 
 #endif
 

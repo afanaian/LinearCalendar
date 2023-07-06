@@ -10,7 +10,7 @@
 import SwiftUI
 import CoreData
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 struct MilestoneDayView: View {
     
     var milestoneDay: MilestoneDay
@@ -57,19 +57,19 @@ struct MilestoneDayView: View {
     }
 }
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 struct MilestoneCell_Previews: PreviewProvider {
     static var previews: some View {
         let testData = TestData()
         let milestones = [
-            MilestoneItem(title: "Test 01", color: .blue, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 02", color: .blue, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 03", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 04", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 05", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 06", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 07", color: .red, date: Date(), objectId: NSManagedObjectID()),
-            MilestoneItem(title: "Test 08", color: .red, date: Date(), objectId: NSManagedObjectID())
+            MilestoneItem(id: UUID().uuidString, title: "Test 01", color: .blue, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 02", color: .blue, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 03", color: .red, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 04", color: .red, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 05", color: .red, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 06", color: .red, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 07", color: .red, date: Date()),
+            MilestoneItem(id: UUID().uuidString, title: "Test 08", color: .red, date: Date())
         ]
 
         let milestoneDay = MilestoneDay(date: Date(), milestones: milestones)

@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 @available(iOS 15.0, *)
+// Had to do each portion individually.
+// For some reason the sizing for the point / edge doesn't totally match up when you make them in one shape.
 struct MilestoneView: View {
     
     let milestone: MilestoneItem
@@ -72,7 +74,7 @@ private struct MilestoneEdge: View {
 struct FillMilestoneShape_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
-            let milestoneItem = MilestoneItem(title: "Testing 😶 Night", color: .red, date: Date(), objectId: NSManagedObjectID())
+            let milestoneItem = MilestoneItem(id: UUID().uuidString, title: "Testing 😶 Night", color: .red, date: Date())
             MilestoneView(milestone: milestoneItem, includePoint: true, includeEdge: true)
                 .environment(\.font, .caption)
                 .frame(width: milestoneItem.title.widthOfString() + 30, height: 20)

@@ -106,24 +106,29 @@ public class MilestoneDay: Comparable, Hashable {
  - subTitle: Optional separated by "-" from title ex: "title - subtitle"
  - color: used for milestone background color. Does not have a default value
  - date: used to put the milestone in the right day
- - id: NSManagedObjectID (used on MilestoneDelegate)
+ - id: UUID (used on MilestoneDelegate)
  - image: Optional image. Must be 10x10. Added at end of titles. ex. "title - second title (image)"
  */
 @available(iOS 15.0, *)
 public struct MilestoneItem: Equatable, Identifiable {
+    public let id: String
     public let title: String
     public let subTitle: String?
     public let color: Color
     public let date: Date
-    public let id: NSManagedObjectID
     public let image: UIImage?
     
-    public init(title: String, subTitle: String? = nil, color: Color, date: Date, objectId: NSManagedObjectID, image: UIImage? = nil) {
+    public init(id: String,
+                title: String,
+                subTitle: String? = nil,
+                color: Color,
+                date: Date,
+                image: UIImage? = nil) {
+        self.id = id
         self.title = title
         self.subTitle = subTitle
         self.color = color
         self.date = date
-        self.id = objectId
         self.image = image
     }
     
